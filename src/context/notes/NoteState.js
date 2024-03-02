@@ -1,4 +1,3 @@
-import { tab } from "@testing-library/user-event/dist/tab";
 import NoteContext from "./noteContext";
 import { useState } from "react";
 
@@ -18,6 +17,7 @@ const NoteState = (props) => {
       }
     });
     const json = await response.json();
+    console.log(json)
     setNotes(json)
 
   }
@@ -34,6 +34,7 @@ const NoteState = (props) => {
       body: JSON.stringify({title, description, tag})
     });
     
+    console.log("Adding a new note")
     const note = {
       "_id": "65d87c88c5d4c43bdc53c0c3",
       "user": "65d76706e95fc2d7e4619089",
@@ -47,7 +48,19 @@ const NoteState = (props) => {
   }
 
   //Delete a Note
-  const deleteNote = (id) => {
+  const deleteNote = async (id) => {
+    //API Call
+    const response = await fetch(`${host}/api/notes/deletenote/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+        "auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjVkNzY3MDZlOTVmYzJkN2U0NjE5MDg5In0sImlhdCI6MTcwODY2NTM0OX0.TQwH19c1xkZdUy7A4xgiVkA5dYi7w_KKFLkcne7w-3Q"
+      }
+    });
+    const json = response.json();
+    console.log(json)
+
+    console.log("Deleting the note with id" + id)
     const newNotes = notes.filter((note) => { return note._id !== id })
     setNotes(newNotes)
   }
@@ -61,7 +74,7 @@ const NoteState = (props) => {
         "Content-Type": "application/json",
         "auth-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjVkNzY3MDZlOTVmYzJkN2U0NjE5MDg5In0sImlhdCI6MTcwODY2NTM0OX0.TQwH19c1xkZdUy7A4xgiVkA5dYi7w_KKFLkcne7w-3Q"
       },
-      body: JSON.stringify(title, description, tag)
+      body: JSON.stringify({title, description, tag})
     });
     const json = response.json();
 
