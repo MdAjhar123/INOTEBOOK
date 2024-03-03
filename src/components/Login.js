@@ -8,7 +8,7 @@ const Login = () => {
 
     const handleSubmit = async (e) =>{
         e.preventDefault();
-        const response = await fetch(`http://localhost:5000/api/auth/login`, {
+        const response = await fetch("http://localhost:5000/api/auth/login", {
             method: "POST",
             headers: {
               "Content-Type": "application/json"
@@ -26,11 +26,12 @@ const Login = () => {
             alert("Invalid credentials")
         }
     }
-
+    
     const onChange = (e)=>{
         setCredentials({...credentials, [e.target.name]: e.target.value})
     }
 
+    
     return (
         <div>
             <form onSubmit={handleSubmit}>
